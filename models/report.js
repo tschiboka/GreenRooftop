@@ -27,6 +27,9 @@ const schema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    created: {
+        type: Date, default: Date.now(),                           
+    }
 });
 
 const Report = mongoose.model("Report", schema);                       // Create Model
@@ -39,6 +42,7 @@ function validateReport(report) {
         humidity: Joi.number().required(),
         temperature: Joi.number().required(),
         tank: Joi.number().required(),
+        created: Joi.date(),
     });
 
     return schema.validate(report);

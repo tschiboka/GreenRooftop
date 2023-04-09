@@ -54,7 +54,7 @@ router.post("/", async (req, res) => {
     const { error, value } = validateReport({ deviceID: id, moisture, light, humidity, temperature, tank });
     if (error) return res.status(400).json({ success: false, message: error.details[0].message });
 
-    const report = new Report({ deviceID: id, moisture, light, humidity, temperature, tank });
+    const report = new Report({ deviceID: id, moisture, light, humidity, temperature, tank, created: Date.now() });
     await report.save();
 
     // Send Alert If Moisture Is Under 5%

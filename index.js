@@ -36,3 +36,4 @@ const dbString = process.env.DB_STRING;
 mongoose.connect(dbString)
     .then(() => console.log(`Connected to DB`))
     .catch(err => console.log(`Could NOT Connect to DB: ${ err }`));
+
