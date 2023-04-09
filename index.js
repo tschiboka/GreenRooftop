@@ -24,16 +24,17 @@ app.use("/api/report", report);
 app.use("/api/users", users);
 app.use("/api/devices", devices);
 
-// Listen Port
 console.log("GREEN ROOFTOP API");
-const server = app.listen(PORT, () => {                             // Display Log
-    console.log(`PORT:        ${ PORT }`);
-});
-
 
 // Database Connection
 const dbString = process.env.DB_STRING;
 mongoose.connect(dbString)
-    .then(() => console.log(`Connected to DB`))
+.then(() => {
+        // Listen Port
+        console.log(`Connected to DB`)
+        const server = app.listen(PORT, () => {                             // Display Log
+            console.log(`PORT:        ${ PORT }`);
+        });        
+    })
     .catch(err => console.log(`Could NOT Connect to DB: ${ err }`));
 
