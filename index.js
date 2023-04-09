@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+require('dotenv').config();
 
 const cors = require('cors');                                      // CORS Settings
 
@@ -31,7 +32,7 @@ const server = app.listen(PORT, () => {                             // Display L
 
 
 // Database Connection
-const dbString = "mongodb+srv://tibiakitivadar:8FOMBxj7II9PSFGG@cluster0.7zqgppt.mongodb.net/?";
+const dbString = process.env.DB_STRING;
 mongoose.connect(dbString)
     .then(() => console.log(`Connected to DB`))
     .catch(err => console.log(`Could NOT Connect to DB: ${ err }`));
