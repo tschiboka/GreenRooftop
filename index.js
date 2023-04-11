@@ -17,24 +17,29 @@ app.use(cors({
 }));
 
 const PORT = process.env.PORT || 5500;                             // PORT
+const index = require("./routes/index");
 const report = require("./routes/report");
 const users = require("./routes/user");
 const devices = require("./routes/device");
+
+app.use("/", index);
 app.use("/api/report", report);
 app.use("/api/users", users);
 app.use("/api/devices", devices);
 
 console.log("GREEN ROOFTOP API");
 
-// Database Connection
-const dbString = process.env.DB_STRING;
-mongoose.connect(dbString)
-.then(() => {
-        // Listen Port
-        console.log(`Connected to DB`)
-        const server = app.listen(PORT, () => {                             // Display Log
-            console.log(`PORT:        ${ PORT }`);
-        });        
-    })
-    .catch(err => console.log(`Could NOT Connect to DB: ${ err }`));
+
+
+// Connect to MongoDB First and Listen Server (The Order is Restricted by Cyclic Web Server)
+const dbString = process.env.DB_STRING;                            // Get Connection String from Environment Variables
+mongoose.connect(dbString)                                         // Connect First
+.then(                                                             // If resolved
+    () => {
+    console.log(`Connected to DB`);                                
+    const server = app.listen(PORT, () => {                        // Listen Port After
+    console.log(`PORT:        ${ PORT }`);
+    });        
+})
+.catch(err => console.log(`Could NOT Connect to DB: ${ err }`));   // Reject
 
